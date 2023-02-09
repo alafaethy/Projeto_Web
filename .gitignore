@@ -1,0 +1,4 @@
+.venv
+teste.py
+scrap_dados/__pycache__
+.gitignore
