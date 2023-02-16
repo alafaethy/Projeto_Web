@@ -1,4 +1,6 @@
 .venv
 teste.py
+test2.py
 scrap_dados/__pycache__
 .gitignore
+.vscode
