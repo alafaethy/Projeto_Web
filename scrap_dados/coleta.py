@@ -1,15 +1,11 @@
 from dados_yahoo import *
 import time
 
-
-# init = Financas()
-# init.iniciar()
-
-
-
-
 while True:
     init = Financas()
     init.iniciar()
+    for x in range(15,0,-1):
+        sec = x % 60
 
-    time.sleep(10)  # 15 min = 900 seg
+        print(f'TIMER   00:{sec:02}', end='\r')
+        time.sleep(1)
