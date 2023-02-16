@@ -1,5 +1,13 @@
 from dados_yahoo import *
 import time
+
+
+# init = Financas()
+# init.iniciar()
+
+
+
+
 while True:
     init = Financas()
     init.iniciar()
