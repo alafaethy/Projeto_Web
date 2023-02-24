@@ -1,4 +1,4 @@
 # Web Site Django
 
 
-Processo de criação site do invetimento pessoal.
+Processo de criação do site de invetimento pessoal.
