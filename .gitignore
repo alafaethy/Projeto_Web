@@ -1,3 +1,5 @@
 .venv
 .venv\Lib\site-packages
 __pycache__
+test2.py
+teste.py
