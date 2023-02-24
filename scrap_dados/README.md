@@ -1,3 +1,5 @@
-# Projeto_Web
+# Scrap Dados
 
-# Dashboard
+. Webscraping site yahoo finance e Infomoney.
+
+Em produção do sistema completo.

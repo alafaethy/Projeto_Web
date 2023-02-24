@@ -1,0 +1,49 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{%block 'title'%}Teste Dash {%endblock%}
+
+{%block 'head'%} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {%endblock%}
+
+{%block 'body'%}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-deck">
+
+                <div class="col-md informacoes_basicas">
+                    <div class="text-justify">
+                        <i class="bi bi-wallet"></i>
+                        <label class="texto">Total Investido</label>
+                        <h1>
+                            &nbspR$ <span class="money" id="total_investido"> </span>
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="col-md informacoes_basicas">
+                    <div class="text-justify">
+                        <i class="bi bi-cash-coin"></i>
+                        <label class="texto">Lucro de Investimento</label> 
+                            <h1> 
+                                &nbspR$ <span id="lucro"></span>
+                            </h1>
+                    </div> 
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{%static 'js/main.js'%}"></script>
+<script>
+    window.onload = function(event){
+        renderizar_total_vendido('{% url "return_total"%}')
+        lucro_investido('{% url "return_lucro"%}')
+    }
+</script>
+{%endblock%}
