@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Ticket
 from datetime import datetime
 from django.db.models import Sum
@@ -12,7 +12,9 @@ def dashboard(request):
     return render(request,"dashboard.html")
 
 def teste (request):
-    return render(request,"teste.html")
+    tabelas = Ticket.objects.all()
+    return render(request,"teste.html", {"tabelas":tabelas})
+    # return render(request,"teste.html")
 
 
 def  return_total(request):
@@ -21,9 +23,9 @@ def  return_total(request):
 
     som = cota * total
     
-    
+    a = f'{som:.2f}'
     if request.method == "GET":
-        return JsonResponse({'total' : som}) # SOMAR TODO FATURAMENTO DO BD.Vendas
+        return JsonResponse({'total' : a}) # SOMAR TODO FATURAMENTO DO BD.Vendas
 
 
 def return_lucro(request):
@@ -32,6 +34,44 @@ def return_lucro(request):
     
     dev = rendimento * cota
 
-
+    a = f'{dev:.2f}'
     if request.method == "GET":
-        return JsonResponse({'rendimento': dev})
+        return JsonResponse({'rendimento': a})
+
+def delete(request,id):
+    tickets = Ticket.objects.get(id=id)
+    print(tickets)
+    tickets.delete()
+    return redirect("teste")
+
+
+
+def add(request):
+    if request.method == "POST":
+        ticket = request.POST.get("ticket")
+        company = request.POST.get("company")
+        
+        emp = Ticket(
+            ticket = ticket,
+            company = company,
+            
+        )
+        try:
+            emp.save()
+            return redirect("teste")
+        except ValueError as err:
+            print("NAO SALVO", err)
+        
+    return redirect("teste")
+
+
+def edit(request,id):
+    cota = Ticket.objects.all()
+    
+    ctx = {
+        'cota':cota
+    }
+    
+    
+    
+    return redirect(request,"teste",ctx)

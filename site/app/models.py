@@ -29,20 +29,20 @@ from datetime import datetime
 
 class Ticket(models.Model):
     ticket = models.CharField(max_length=50)
-    name = models.CharField(max_length=200)
-    cota = models.CharField(max_length=50)
+    company = models.CharField(max_length=200)
+    cota = models.CharField(max_length=50 , null=True)
 
-    price = models.FloatField()
-    var_mercado_preco = models.FloatField()
-    var_preco_porcento = models.CharField(max_length=100)
+    price = models.FloatField(null=True)
+    var_mercado_preco = models.FloatField(null=True)
+    var_preco_porcento = models.CharField(max_length=100,null=True)
 
-    ultimo_rendimento = models.FloatField()
-    proximo_rendimento = models.FloatField() # <<<- sera calculado antes de enviar para o banco
+    ultimo_rendimento = models.FloatField(null=True)
+    proximo_rendimento = models.FloatField(null=True) # <<<- sera calculado antes de enviar para o banco
 
 
 
-    div_yield_mes = models.CharField(max_length=100)
-    div_yield_ano = models.CharField(max_length=100)
+    div_yield_mes = models.CharField(max_length=100,null=True)
+    div_yield_ano = models.CharField(max_length=100,null=True)
 
     datatime = models.DateTimeField(default=datetime.now())
 

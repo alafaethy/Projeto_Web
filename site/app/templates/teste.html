@@ -3,7 +3,10 @@
 
 {%block 'title'%}Teste Dash {%endblock%}
 
-{%block 'head'%} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {%endblock%}
+{%block 'head'%} 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{%endblock%}
 
 {%block 'body'%}
 <div class="container">
@@ -36,6 +39,55 @@
         </div>
 
     </div>
+    <br>
+    <div class="forms">
+        <input class="search" type="search" name="" id="">
+        <button class="button" data-modal="modalOne">To Add</button>
+        <div id="modalOne" class="modal">
+            <div class="modal-content">
+              <div class="contact-form">
+                <a class="close">&times;</a>
+                <form action="{%url 'add'%}" method="POST">
+                    {% csrf_token %}
+                  <h2>To add Ticket</h2>
+                  <div class="inp">
+                    <input class="ticket" type="text" name="ticket" placeholder="Ticket" />
+                    <input class="company" type="text" name="company" placeholder="Company" />
+                  </div>
+                  <button type="submit" value="add">to add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+    <br>
+    <div>
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th> ID</th>
+                    <th> Ticket</th>
+                    <th> Company</th>
+                    <th> Cota</th>
+                    <th> Price</th>
+                    <th> Action</th>
+                </tr>
+            </thead>
+            {% for tabela in tabelas %}
+                <tr>
+                    <td> {{tabela.id}}</td>
+                    <td> {{tabela.ticket}}</td>
+                    <td> {{tabela.company}}</td>
+                    <td> {{tabela.cota}}</td>
+                    <td> {{tabela.price}}</td>
+                    <td>
+                        <a href="/edit/{{tabela.id}}"><span class="btn btn-success"> Edit</span></a>
+                        <a href="/delete/{{tabela.id}}"><span class="btn btn-danger" > Delete</span></a>
+                    </td>
+                </tr>
+            {%endfor%}    
+        </table>
+    </div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -46,4 +98,26 @@
         lucro_investido('{% url "return_lucro"%}')
     }
 </script>
+
+<script>
+    let modalBtns = [...document.querySelectorAll(".button")];
+    modalBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        let modal = btn.getAttribute("data-modal");
+        document.getElementById(modal).style.display = "block";
+      };
+    });
+    let closeBtns = [...document.querySelectorAll(".close")];
+    closeBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        let modal = btn.closest(".modal");
+        modal.style.display = "none";
+      };
+    });
+    window.onclick = function (event) {
+      if (event.target.className === "modal") {
+        event.target.style.display = "none";
+      }
+    };
+  </script>
 {%endblock%}
