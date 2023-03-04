@@ -14,25 +14,23 @@ def dashboard(request):
 def teste (request):
     tabelas = Ticket.objects.all()
     return render(request,"teste.html", {"tabelas":tabelas})
+    
     # return render(request,"teste.html")
 
 
 def  return_total(request):
     total = Ticket.objects.all().aggregate(Sum('price'))['price__sum']
-    cota = Ticket.objects.all().aggregate(Sum('cota'))['cota__sum']
 
-    som = cota * total
-    
-    a = f'{som:.2f}'
+
+
     if request.method == "GET":
-        return JsonResponse({'total' : a}) # SOMAR TODO FATURAMENTO DO BD.Vendas
+        return JsonResponse({'total' : total}) # SOMAR TODO FATURAMENTO DO BD.Vendas
 
 
 def return_lucro(request):
-    rendimento = Ticket.objects.all().aggregate(Sum('ultimo_rendimento'))['ultimo_rendimento__sum']
-    cota = Ticket.objects.all().aggregate(Sum('cota'))['cota__sum']
+    rendimento = Ticket.objects.all().aggregate(Sum('rendimento'))['rendimento__sum']
     
-    dev = rendimento * cota
+    dev = rendimento * 1
 
     a = f'{dev:.2f}'
     if request.method == "GET":
@@ -40,7 +38,6 @@ def return_lucro(request):
 
 def delete(request,id):
     tickets = Ticket.objects.get(id=id)
-    print(tickets)
     tickets.delete()
     return redirect("teste")
 
@@ -50,10 +47,14 @@ def add(request):
     if request.method == "POST":
         ticket = request.POST.get("ticket")
         company = request.POST.get("company")
+        cota = request.POST.get("cota")
+        price = request.POST.get("price")
         
         emp = Ticket(
             ticket = ticket,
             company = company,
+            cota = cota,
+            price = price,
             
         )
         try:
@@ -66,12 +67,31 @@ def add(request):
 
 
 def edit(request,id):
-    cota = Ticket.objects.all()
+    # emp = Ticket.objects.all()
     
-    ctx = {
-        'cota':cota
-    }
-    
-    
-    
-    return redirect(request,"teste",ctx)
+    # ctx = {
+    #     'emp':emp
+    # }
+    # return redirect(request,"teste.html", ctx)
+    cotas = Ticket.objects.get(id=id)
+    return render(request,"edit.html", {"cota": cotas})
+
+
+def update(request,id):
+    if request.method == "POST":
+        ticket = request.POST.get("ticket")
+        company = request.POST.get("company")
+        cota = request.POST.get("cota")
+        price = request.POST.get("price")
+        emp = Ticket(
+            id = id,
+            ticket = ticket,
+            company = company,
+            cota = cota,
+            price = price,
+            
+            
+        )
+        emp.save()
+        return redirect('teste')
+    return redirect(request,"teste")

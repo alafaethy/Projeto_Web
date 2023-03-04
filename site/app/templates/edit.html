@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{% load static %}
+
+
+{%block 'body'%}
+
+        <form action="{%url 'update' cota.id%}" method="POST">
+          {% csrf_token %}
+          <div class="modal-header">						
+            <h4 class="modal-title">Edit Cotas</h4>
+          </div>
+          <div class="modal-body">					
+            <div class="form-group">
+              <label>Ticket</label>
+              <input name="ticket" value="{{cota.ticket}}" type="text" class="form-control" required>
+            </div>					
+            <div class="form-group">
+              <label>Company</label>
+              <input name="company" value="{{cota.company}}" type="text" class="form-control" required>
+            </div>					
+            <div class="form-group">
+              <label>Cota</label>
+              <input name="cota" value="{{cota.cota}}" type="number" class="form-control" required>
+            </div>					
+            <div class="form-group">
+              <label>Price</label>
+              <input name="price" value="{{cota.price}}" type="number" class="form-control" required>
+            </div>					
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info" value="Update" >
+          </div>
+        </form>
+  
+
+{%endblock%}
